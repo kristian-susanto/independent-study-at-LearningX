@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta
+        property="og:title" content="Personal Diary"
+        property="og:description" content="Catatan terindah yang akan selalu dikenang."
+        property="og:image" content="{{ url_for('static', filename='personal-diary.jpg') }}"
+     />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>Personal Diary</title>
+
+    <style>
+        .profile-image {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold mb-3">Personal Diary</h1>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Choose an Image</p>
+                        <div class="input-group mb-3 custom-file">
+                            <input type="file" class="form-control" id="image">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Choose Profile Picture</p>
+                        <div class="input-group mb-3 custom-file">
+                            <input type="file" class="form-control" id="profile">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Image title goes here" aria-label="image title"
+                        aria-describedby="basic-addon1" id="image-title">
+                </div>
+
+                <div class="input-group">
+                    <textarea class="form-control" aria-label="image description" id="image-description"
+                        placeholder="Type in image description here"></textarea>
+                </div>
+            </div>
+            <button onclick="posting()" type="submit" id="test" class="btn btn-primary btn-lg">Save</button>
+        </div>
+        <div class="row justify-content-start" id="cards-box">
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+    <script>
+        $(document).ready(function () {
+            listing();
+            bsCustomFileInput.init();
+        });
+
+        function listing() {
+            $.ajax({
+                type: 'GET',
+                url: '/diary',
+                data: {},
+                success: function (response) {
+                    let articles = response['articles'];
+                    for (let i = 0; i < articles.length; i++) {
+                        let title = articles[i]['title'];
+                        let content = articles[i]['content'];
+                        let file = articles[i]['file'];
+                        let profile = articles[i]['profile'];
+                        let time = articles[i]['time'] || '????.??.??';
+
+                        let profile_html = '';
+                        if (profile) {
+                            profile_html = `<img src="../${profile}" class="profile-image" alt="...">`
+                        }
+                        let temp_html = `
+                            <div class="col-4">
+                                <div class="card">
+                                    <img src="../${file}" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        ${profile_html}
+                                        <h5 class="card-title">${title}</h5>
+                                        <p class="card-text">${content}</p>
+                                        <h6 class="card-subtitle mb-2 text-body-secondary">${time}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        $('#cards-box').append(temp_html);
+                    }
+                }
+            });
+        }
+
+        function posting() {
+            let form_data = new FormData();
+
+            let title = $('#image-title').val();
+            if (!title) {
+                return alert('Hey user, you forgot a title');
+            }
+            let content = $('#image-description').val();
+            if (!content) {
+                return alert('Hey user, you forgot a description');
+            }
+            var file = $('#image')[0].files[0];
+            var profile = $('#profile')[0].files[0];
+
+            form_data.append('file_give', file);
+            form_data.append('profile_give', profile);
+            form_data.append('title_give', title);
+            form_data.append('content_give', content);
+
+            $.ajax({
+                type: 'POST',
+                url: '/diary',
+                data: form_data,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    alert(response["message"]);
+                    window.location.reload();
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

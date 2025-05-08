@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Document</title>
+    <!-- Bulma CSS -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"
+    />
+</head>
+<body>
+    <p>
+        <h1 class="title">This page can only be viewed for 5 seconds after logging in</h1>
+        <h1 class="subtitle">Please try refreshing the page</h1>
+    </p>
+    <h5 class="subtitle">My nickname: {{nickname}}</h5>
+    <button class="button is-danger" onclick="logout()">Logout</button>
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script>
+        // Untuk logout, anda hanya tinggal
+        // menghapus token anda dari cookies browser anda
+        function logout(){
+            $.removeCookie('mytoken');
+            alert('You have been logged out!');
+            window.location.href = '/login';
+        }
+    </script>
+</body>
+</html>

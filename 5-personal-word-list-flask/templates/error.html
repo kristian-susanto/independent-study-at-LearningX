@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:title" content="My Word List" />
+    <meta property="og:description" content="The greatest word list of them all" />
+    <meta property="og:image" content="{{url_for('static', filename='logo_red.png')}}" />
+
+    <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}" type="image/x-icon" />
+    <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}" type="image/x-icon" />
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='mystyle.css') }}"
+      rel="stylesheet"
+    />
+    <title>Personal Word List</title>
+  </head>
+  <body>
+    <div class="wrap">
+        <div class="banner" onclick="window.location.href = '/';"></div>
+        <div class="container">
+            <h1>Your word, "{{word}}", could not be found</h1>
+            {% if suggestions %}
+                <h3>Here are some suggested words</h3>
+                {% for suggestion in suggestions %}
+                    <a href="/detail/{{suggestion}}" class="btn btn-primary" style="margin: 0 8px 8px 0;">
+                        {{suggestion}}
+                    </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+      <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+            <li class="nav-item">
+                <a href="/" class="nav-link px-2 text-body-secondary">Home</a>
+            </li>
+        </ul>
+        <p class="text-center text-body-secondary">
+            © 2024 Word List Corp.
+        </p>
+    </footer>
+    </div>
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.js"
+    ></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    ></script>
+  </body>
+</html>

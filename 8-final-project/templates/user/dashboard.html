@@ -1,0 +1,75 @@
+{% include 'user/templates/header.html' %}
+    <main id="main" class="mt-5">
+        <!-- Carousel -->
+        <section id="hero">
+            <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+                <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+
+                <div class="carousel-inner" role="listbox">
+
+                    <!-- Bagian 1 -->
+                    <div class="carousel-item active" style="background-image: url(../static/user/img/carousel.jpeg)">
+                        <div class="carousel-container">
+                            <div class="container">
+                                <h2 class="animate__animated animate__fadeInDown"><a href="/profil">
+                                    <img src="{{ url_for('static', filename=user_info.profile_pic_real) }}" alt=""  class="rounded-circle align-self-center" style="width: 100px; height: 100px; margin-bottom: 20px;">
+                                    </a><span>Halo, {{ user_info.profile_name }}</span></h2>
+                                <p class="animate__animated animate__fadeInUp" style="color: whitesmoke; font-weight: bold; font-style: italic; font-size: 25px;">Selamat Datang di Navirin's</p>
+                                <a href="#counts" class="btn-get-started animate__animated animate__fadeInUp scrollto">Lihat Rekap Pembelian Kamu</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bagian 2 -->
+                    <div class="carousel-item" style="background-image: url(../static/user/img/carousel.jpeg)">
+                        <div class="carousel-container">
+                            <div class="container">
+                                <h2 class="animate__animated animate__fadeInDown">Koleksi Buket Navirin's</h2>
+                                <p class="animate__animated animate__fadeInUp">Kami menyediakan berbagai buket untuk semua acara</p>
+                                <a href="/koleksi" class="btn-get-started animate__animated animate__fadeInUp scrollto">Koleksi Kami</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+                </a>
+
+                <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+                    <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Rekap -->
+        <section id="counts" class="counts">
+            <div class="container mt-5" data-aos="fade-up">
+                <div class="section-title">
+                    <h2>Navirin's</h2>
+                    <p>Rekap Pembelian</p>
+                </div>
+                <div class="row no-gutters justify-content-md-center">
+                    <div class="col-lg-4 col-md-6 d-md-flex align-items-md-stretch">
+                        <div class="count-box">
+                            <i class="bi bi-cash-coin"></i>
+                            <span data-purecounter-start="0" data-purecounter-end="{{ total_pembelian }}" data-purecounter-duration="1" class="purecounter"></span>
+                            <p><strong>Total Pembelian</strong> ({{ total_pembelian_rupiah }})</p>
+                        </div>
+                    </div>
+    
+                    <div class="col-lg-4 col-md-6 d-md-flex align-items-md-stretch">
+                        <div class="count-box">
+                            <i class="bi bi-flower2"></i>
+                            <span data-purecounter-start="0" data-purecounter-end="{{ total_buket }}" data-purecounter-duration="1" class="purecounter"></span>
+                            <p><strong>Total Item Buket yang Telah Dibeli</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% include 'user/templates/footer.html' %}
