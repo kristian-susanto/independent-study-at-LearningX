@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <style type="text/css">
+        div.people-box {
+            margin: 10px 0 20px 0;
+        }
+
+        table {
+            border: 1px solid;
+            border-collapse: collapse;
+        }
+
+        td,
+        th {
+            padding: 10px;
+            border: 1px solid;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button onclick="to_jobs()">Mari kita beralih ke jobs page</button>
+    </div>
+    <h1>Practice Ajax</h1>
+
+    <hr />
+
+    <div class="people-box">
+        <h2>Homepage</h2>
+        <p>Menampilkan seluruh orang (people) dan sebagian data mereka sebagai tabel. Properti dari "people" yang perlu anda tampilkan adalah fname, lname, dan age.</p>
+        <table>
+            <thead>
+                <tr>
+                    <td>First Name</td>
+                    <td>Last Name</td>
+                    <td>Age</td>
+                </tr>
+            </thead>
+            <tbody id="people_homepage">
+            </tbody>
+        </table>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            ajax();
+        });
+
+        function ajax() {
+            $('#people_homepage').empty();
+            $.ajax({
+                type: 'GET',
+                url: 'https://my-json-server.typicode.com/jjjosephhh/test-db-002/people',
+                data: {},
+                success: function (response) {
+                    let rows = response;
+                    for (let i = 0; i < rows.length; i++) {
+                        let fname = rows[i]['fname'];
+                        let lname = rows[i]['lname'];
+                        let age = rows[i]['age'];
+                        let temp_html = `
+                            <tr>
+                                <td>${fname}</td>
+                                <td>${lname}</td>
+                                <td>${age}</td>
+                            </tr>
+                        `;
+                        $('#people_homepage').append(temp_html)
+                    }
+                }
+            });
+        }
+
+        function to_jobs() {
+            window.location.href = '/jobs';
+        }
+    </script>
+</body>
+</html>

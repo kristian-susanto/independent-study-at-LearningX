@@ -1,0 +1,73 @@
+<!-- Nama			: Fransiscus Kristian Susanto
+NIM			        : 40621100012
+Perguruan Tinggi	: Universitas Widyatama
+Program		        : Essential Programming Course - Full Stack Web Development
+ID Kegiatan		    : 8304785
+Mitra			    : PT Global Investment Institusi -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery practice</title>
+
+    <!-- import jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <style type="text/css">
+        div.question-box {
+            margin: 10px 0 20px 0;
+        }
+
+        .bad {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Practicing the combination of jQuery+Ajax</h1>
+
+    <hr />
+
+    <div class="question-box">
+        <h2>1. Using Seoul's OpenAPI (real-time air pollution rate)</h2>
+        <p>Please indicate the air pollution rate in all districts</p>
+        <p>Each time you click the update button, it should be erased and rewritten.</p>
+        <button onclick="q1()">update</button>
+        <ul id="index-q1">
+            <li>2021-02-24 : 32</li>
+            <li>2021-02-25 : 15</li>
+            <li>2021-02-26 : 57</li>
+            <li>2021-02-27 : 70</li>
+        </ul>
+    </div>
+
+    <script>
+        function q1() {
+            $('#index-q1').empty();
+            $.ajax({
+                type: "GET",
+                url: "http://spartacodingclub.shop/en/global_air/seoul",
+                data: {},
+                success: function (response) {
+                    let dates = response['data']['forecast'];
+                    for (let i = 0; i < dates.length; i++) {
+                        let day = dates[i]['day'];
+                        let avg = dates[i]['avg'];
+                        let temp_html = '';
+                        if (avg > 70) {
+                            temp_html = `<li class="bad">${day} : ${avg}</li>`;
+                        } else {
+                            temp_html = `<li>${day} : ${avg}</li>`;
+                        }
+                        $('#index-q1').append(temp_html);
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

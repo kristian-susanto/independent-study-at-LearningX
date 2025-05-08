@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobs</title>
+    <style type="text/css">
+        div.jobs-box {
+            margin: 10px 0 20px 0;
+        }
+
+        table {
+            border: 1px solid;
+            border-collapse: collapse;
+        }
+
+        td,
+        th {
+            padding: 10px;
+            border: 1px solid;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button onclick="to_homepage()">Mari kita beralih ke homepage</button>
+    </div>
+    <h1>Practice Jinja2</h1>
+
+    <hr />
+
+    <div class="jobs-box">
+        <h2>Jobs</h2>
+        <p>Menampilkan seluruh orang dan sebagian data mereka sebagai table. Properti dari orang yang perlu anda tampilkan adalah fname, lname, job, serta pay.</p>
+        <table>
+            <thead>
+                <tr>
+                    <td>First Name</td>
+                    <td>Last Name</td>
+                    <td>Job</td>
+                    <td>Pay</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                    {% set fname = row.fname %}
+                    {% set lname = row.lname %}
+                    {% set job = row.job %}
+                    {% set pay = row.pay %}
+                        <tr>
+                            <td>{{ fname }}</td>
+                            <td>{{ lname }}</td>
+                            <td>{{ job }}</td>
+                            <td>{{ pay }}</td>
+                        </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function to_homepage() {
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>
